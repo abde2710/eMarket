@@ -1,0 +1,246 @@
+
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#202557">
+<title>E-market — Supermarché en ligne</title>
+<style>
+:root{--navy:#242958;--navy2:#30366f;--yellow:#ffd51f;--red:#ff1722;--green:#18a56b;--ink:#18203d;--muted:#7b8197;--bg:#f5f6fa;--card:#fff;--line:#e6e8ef;--shadow:0 8px 24px #1b22520f}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{background:var(--navy);color:#fff;padding:10px 18px;font-size:13px;text-align:center}
+header{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 4px 20px #0000000a}
+.nav{max-width:1400px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:18px}
+.logo{font-weight:900;font-size:27px;color:var(--navy);letter-spacing:-1px;white-space:nowrap}.logo b{color:var(--yellow)}
+.search{flex:1;position:relative}.search input{width:100%;border:1px solid #dfe2eb;border-radius:14px;padding:13px 16px 13px 43px;outline:none;background:#f7f8fb}.search span{position:absolute;left:15px;top:10px;font-size:20px;color:var(--muted)}
+.adminBtn,.orderBtn{border:0;background:var(--navy);color:#fff;border-radius:11px;padding:12px 17px;font-weight:800}
+.adminBtn{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+main{max-width:1400px;margin:auto;padding:24px 20px 60px}.hero{background:linear-gradient(120deg,#232857,#3c4385);color:#fff;border-radius:22px;padding:26px 28px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:center;gap:20px;overflow:hidden}.hero h1{margin:0 0 6px;font-size:clamp(25px,4vw,42px)}.hero p{margin:0;color:#dfe2ff}.hero .tag{background:#ffffff16;border:1px solid #ffffff22;padding:11px 14px;border-radius:12px;white-space:nowrap}
+.catalogHead{display:flex;justify-content:space-between;align-items:end;margin:10px 0 14px}.catalogHead h2{margin:0;font-size:22px}.catalogHead small{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.card{background:#fff;border:1px solid #e5e6ec;box-shadow:var(--shadow);min-width:0;overflow:hidden;position:relative}
+.photo{height:205px;background:#fff;display:flex;align-items:center;justify-content:center;padding:10px;position:relative}.photo img{max-width:92%;max-height:190px;object-fit:contain}.badge{position:absolute;right:10px;top:10px;background:var(--red);color:#fff;font-weight:900;font-size:12px;padding:9px 10px;border-radius:50px}.soon{position:absolute;left:10px;top:10px;background:#ff9f1a;color:#4d2a00;font-weight:800;font-size:11px;padding:7px 9px;border-radius:9px}.low{color:#d33;font-size:11px;font-weight:800;margin-top:4px}.body{padding:13px 15px 14px}.name{font-size:14px;min-height:39px}.stock{font-size:11px;color:var(--muted);margin-top:5px}.prices{margin-top:8px;display:flex;align-items:baseline;gap:8px}.price{font-weight:900;font-size:21px;color:var(--navy)}.old{text-decoration:line-through;color:#aaa;font-size:12px}.controls{display:grid;grid-template-columns:38px 1fr 38px;gap:0;margin-top:12px}.controls button,.qty{height:36px;border:1px solid #dfe1e8;background:#fff;color:var(--navy);font-weight:900}.controls button:first-child{border-radius:8px 0 0 8px}.controls button:last-child{border-radius:0 8px 8px 0}.qty{display:flex;align-items:center;justify-content:center;border-left:0;border-right:0}
+.card .lineTotal{font-size:11px;color:var(--muted);text-align:right;margin-top:6px}
+.checkoutWrap{display:flex;justify-content:center;margin-top:25px}.checkout{background:var(--navy);color:#fff;border:0;border-radius:14px;padding:16px 35px;font-size:16px;font-weight:900;box-shadow:0 8px 20px #20255733}
+.empty{grid-column:1/-1;text-align:center;background:#fff;padding:45px;border:1px dashed #ccd0dc;border-radius:16px;color:var(--muted)}
+footer{background:var(--navy);color:#dce0ff;padding:30px 20px;text-align:center;font-size:13px}
+.modal{position:fixed;inset:0;background:#0d1029a8;z-index:50;display:none;align-items:flex-end;justify-content:center}.modal.open{display:flex}.sheet{background:#fff;width:min(760px,100%);max-height:92vh;overflow:auto;border-radius:22px 22px 0 0;padding:22px}
+.sheet h2{margin:0 0 16px}.close{float:right;border:0;background:#eef0f6;border-radius:9px;width:34px;height:34px}.summary{background:#f6f7fb;border-radius:13px;padding:12px;margin:10px 0 16px}.sumrow{display:flex;justify-content:space-between;gap:15px;padding:7px 0;border-bottom:1px solid #e5e7ef;font-size:14px}.sumrow:last-child{border:0}.total{font-weight:900;font-size:19px}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:800}.field input,.field select,.field textarea{border:1px solid #dfe2ea;border-radius:10px;padding:12px;outline:none}.field textarea{min-height:75px;resize:vertical}.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice label{border:1px solid #dfe2ea;border-radius:11px;padding:12px;display:block}.choice input{margin-right:7px}.primary{width:100%;margin-top:16px;border:0;background:var(--navy);color:#fff;border-radius:12px;padding:14px;font-weight:900}.notice{padding:11px 13px;border-radius:10px;background:#fff5d8;color:#6d4b00;font-size:13px;margin-bottom:12px}
+#adminView{display:none}.adminTop{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px}.adminTop h1{margin:0}.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.stat{background:#fff;border:1px solid var(--line);border-radius:15px;padding:16px;box-shadow:var(--shadow)}.stat small{color:var(--muted)}.stat strong{display:block;font-size:25px;margin-top:5px}.adminGrid{display:grid;grid-template-columns:1.1fr .9fr;gap:15px;margin-top:15px}.panel{background:#fff;border:1px solid var(--line);border-radius:15px;padding:17px}.panel h3{margin:0 0 13px}.tableWrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{text-align:left;padding:10px;border-bottom:1px solid #edf0f4;white-space:nowrap}.pill{padding:5px 8px;border-radius:20px;background:#eef0ff;color:var(--navy);font-weight:800;font-size:11px}.danger{color:#c00}.mini{border:1px solid #dfe2ea;background:#fff;border-radius:8px;padding:7px 9px;font-weight:700}.login{max-width:430px;margin:60px auto;background:#fff;border-radius:20px;padding:25px;box-shadow:var(--shadow);border:1px solid var(--line)}.login h2{margin-top:0}.tabs{display:flex;gap:8px;margin-bottom:15px}.tabs button{border:1px solid #dfe2ea;background:#fff;border-radius:9px;padding:9px 12px;font-weight:800}.tabs button.active{background:var(--navy);color:#fff}.toast{position:fixed;right:18px;bottom:18px;background:#202557;color:#fff;padding:13px 16px;border-radius:12px;z-index:100;box-shadow:0 10px 30px #0003;display:none}.toast.show{display:block}
+@media(max-width:1150px){.grid{grid-template-columns:repeat(4,1fr)}.stats{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:850px){.grid{grid-template-columns:repeat(3,1fr)}.adminGrid{grid-template-columns:1fr}.nav{flex-wrap:wrap}.search{order:3;flex-basis:100%}}
+@media(max-width:600px){.top{font-size:11px}.nav{padding:10px 12px;gap:9px}.logo{font-size:23px}.adminBtn{padding:9px}.hero{border-radius:15px;padding:20px}.hero .tag{display:none}main{padding:15px 8px 40px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.photo{height:165px}.photo img{max-height:155px}.body{padding:10px}.price{font-size:18px}.controls{grid-template-columns:34px 1fr 34px}.formgrid,.choice{grid-template-columns:1fr}.field.full{grid-column:auto}.sheet{padding:17px}.stats{grid-template-columns:1fr 1fr}.adminTop{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="customerView">
+  <div class="top">🛒 E-market — vos courses simplement, depuis votre téléphone</div>
+  <header>
+    <div class="nav">
+      <div class="logo">e<span>Market</span><b>•</b></div>
+      <div class="search"><span>⌕</span><input id="search" placeholder="Rechercher un produit..." autocomplete="off"></div>
+      <button class="adminBtn" onclick="openAdmin()">⚙ Admin</button>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div><h1>Bienvenue sur E-market 👋</h1><p>Tous nos produits au même endroit. Choisissez vos quantités puis commandez.</p></div>
+      <div class="tag">⚡ Catalogue en temps réel</div>
+    </section>
+    <div class="catalogHead"><h2>Nos produits</h2><small id="countLabel"></small></div>
+    <div class="grid" id="catalog"></div>
+    <div class="checkoutWrap"><button class="checkout" onclick="openCheckout()">🛍 Commander</button></div>
+  </main>
+  <footer>E-market · Supermarché en ligne · Paiement à la livraison ou Apple Pay</footer>
+</div>
+
+<div id="adminView">
+  <main>
+    <div class="adminTop"><div><div class="logo">e<span>Market</span><b>•</b></div><h1>Tableau de bord</h1></div><button class="adminBtn" onclick="closeAdmin()">← Espace client</button></div>
+    <div id="loginBox" class="login">
+      <h2>🔐 Espace administrateur</h2>
+      <p style="color:var(--muted);font-size:13px">Démo locale : identifiant <b>admin</b> · mot de passe <b>emarket2026</b></p>
+      <div class="field"><label>Identifiant</label><input id="loginUser"></div>
+      <div class="field" style="margin-top:10px"><label>Mot de passe</label><input id="loginPass" type="password"></div>
+      <button class="primary" onclick="loginAdmin()">Se connecter</button>
+    </div>
+    <div id="adminPanel" style="display:none">
+      <div class="stats" id="stats"></div>
+      <div class="tabs" style="margin-top:18px">
+        <button class="active" onclick="adminTab('products',this)">Produits</button>
+        <button onclick="adminTab('orders',this)">Commandes</button>
+      </div>
+      <div id="productsTab" class="panel">
+        <h3>Gestion des produits</h3>
+        <button class="primary" style="width:auto;margin:0 0 15px" onclick="newProduct()">＋ Ajouter un produit</button>
+        <div class="tableWrap"><table class="table"><thead><tr><th>Produit</th><th>Prix</th><th>Stock</th><th>Péremption</th><th>Promo</th><th></th></tr></thead><tbody id="productTable"></tbody></table></div>
+      </div>
+      <div id="ordersTab" class="panel" style="display:none">
+        <h3>Commandes</h3>
+        <div class="tableWrap"><table class="table"><thead><tr><th>Client</th><th>Montant</th><th>Paiement</th><th>Réception</th><th>Statut</th></tr></thead><tbody id="orderTable"></tbody></table></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal" id="checkoutModal"><div class="sheet">
+  <button class="close" onclick="closeModal('checkoutModal')">×</button>
+  <h2>Récapitulatif de votre commande</h2>
+  <div id="checkoutNotice"></div><div class="summary" id="summary"></div>
+  <h3>Vos informations</h3>
+  <div class="formgrid">
+    <div class="field"><label>Nom</label><input id="cName" autocomplete="name"></div>
+    <div class="field"><label>Téléphone</label><input id="cPhone" autocomplete="tel"></div>
+    <div class="field full"><label>Adresse</label><textarea id="cAddress" autocomplete="street-address"></textarea></div>
+  </div>
+  <h3>Mode de réception</h3>
+  <div class="choice">
+    <label><input type="radio" name="receive" value="Livraison à domicile" checked> Livraison à domicile</label>
+    <label><input type="radio" name="receive" value="Retrait sur place"> Retrait sur place</label>
+  </div>
+  <h3>Mode de paiement</h3>
+  <div class="choice">
+    <label><input type="radio" name="pay" value="Espèces à la livraison" checked> 💵 Espèces à la livraison</label>
+    <label><input type="radio" name="pay" value="Apple Pay">  Apple Pay</label>
+  </div>
+  <button class="primary" onclick="confirmOrder()">✓ Confirmer la commande</button>
+</div></div>
+
+<div class="modal" id="productModal"><div class="sheet">
+  <button class="close" onclick="closeModal('productModal')">×</button>
+  <h2 id="productModalTitle">Ajouter un produit</h2>
+  <input type="hidden" id="pId">
+  <div class="formgrid">
+    <div class="field full"><label>Nom du produit</label><input id="pName"></div>
+    <div class="field"><label>Prix (Ar)</label><input id="pPrice" type="number" min="0"></div>
+    <div class="field"><label>Stock disponible</label><input id="pStock" type="number" min="0"></div>
+    <div class="field"><label>Ancien prix (si promotion)</label><input id="pOld" type="number" min="0"></div>
+    <div class="field"><label>Date de péremption</label><input id="pExpiry" type="date"></div>
+    <div class="field full">
+  <label>Photo du produit</label>
+  <input id="pImageFile" type="file" accept="image/*" style="padding:9px">
+  <small style="color:var(--muted)">Choisis directement une photo depuis ton téléphone ou ton ordinateur.</small>
+  <input id="pImage" type="hidden">
+  <img id="pImagePreview" alt="Aperçu" style="display:none;max-width:150px;max-height:120px;margin-top:8px;border-radius:10px;object-fit:contain;border:1px solid var(--line)">
+</div>
+  </div>
+  <button class="primary" onclick="saveProduct()">Enregistrer</button>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const seedProducts=[
+ {id:1,name:"Nougat Robert en sachet",price:523,old:550,stock:34,expiry:"2026-12-20",image:svg("🍬","#d9f0e7")},
+ {id:2,name:"Café soluble Black 3en1 30g",price:1235,old:1300,stock:18,expiry:"2027-03-10",image:svg("☕","#171717")},
+ {id:3,name:"Eau de source 50cl",price:1425,old:1500,stock:40,expiry:"2027-05-12",image:svg("💧","#dff3ff")},
+ {id:4,name:"Kit 3 en 1 couvert en bois biodégradable",price:1900,old:2000,stock:12,expiry:"2029-01-01",image:svg("🥢","#efe2bd")},
+ {id:5,name:"Boîte en carton fenêtre pour sushis",price:1900,old:2000,stock:9,expiry:"2029-01-01",image:svg("🍣","#202020")},
+ {id:6,name:"Jus de fruits orange 20cl",price:2090,old:2200,stock:23,expiry:"2026-08-20",image:svg("🍊","#ffe9a7")},
+ {id:7,name:"Nectar multifruits 20cl",price:2366,old:2490,stock:16,expiry:"2026-08-24",image:svg("🧃","#fff0d2")},
+ {id:8,name:"Bougie d'anniversaire chiffre 5",price:2375,old:2500,stock:7,expiry:"2029-01-01",image:svg("🎂","#ffd1e0")},
+ {id:9,name:"Jus de pomme en brique 20cl",price:2375,old:2500,stock:21,expiry:"2026-08-22",image:svg("🍏","#e9f5dc")},
+ {id:10,name:"Allumettes salon",price:2375,old:2500,stock:5,expiry:"2029-01-01",image:svg("🔥","#dfe7f5")},
+ {id:11,name:"Biscuits chocolat",price:1800,old:2000,stock:30,expiry:"2026-09-02",image:svg("🍪","#ead4bd")},
+ {id:12,name:"Lait UHT 1L",price:3200,old:0,stock:14,expiry:"2026-08-19",image:svg("🥛","#f3f3f3")}
+];
+let products=JSON.parse(localStorage.getItem("emarket_products")||"null")||seedProducts;
+let cart=JSON.parse(localStorage.getItem("emarket_cart")||"{}");
+let orders=JSON.parse(localStorage.getItem("emarket_orders")||"[]");
+let customer=JSON.parse(localStorage.getItem("emarket_customer")||"{}");
+const money=n=>new Intl.NumberFormat("fr-FR").format(n)+" Ar";
+const today=new Date();
+function svg(emoji,bg){return "data:image/svg+xml;charset=UTF-8,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="500" height="400"><rect width="100%" height="100%" rx="28" fill="${bg}"/><text x="50%" y="56%" text-anchor="middle" font-size="145">${emoji}</text></svg>`)}
+function save(){localStorage.setItem("emarket_products",JSON.stringify(products));localStorage.setItem("emarket_cart",JSON.stringify(cart));localStorage.setItem("emarket_orders",JSON.stringify(orders))}
+function daysTo(date){return Math.ceil((new Date(date+"T23:59:59")-new Date())/86400000)}
+function activeProducts(){return products.filter(p=>p.stock>0 && daysTo(p.expiry)>=0)}
+function render(){
+ const q=document.getElementById("search").value.toLowerCase().trim();
+ const list=activeProducts().filter(p=>p.name.toLowerCase().includes(q));
+ document.getElementById("countLabel").textContent=list.length+" produit"+(list.length>1?"s":"");
+ const el=document.getElementById("catalog");
+ if(!list.length){el.innerHTML='<div class="empty">Aucun produit ne correspond à votre recherche.</div>';return}
+ el.innerHTML=list.map(p=>{
+   const qty=cart[p.id]||0, d=daysTo(p.expiry), promo=p.old&&p.old>p.price;
+   return `<article class="card">
+    <div class="photo">${promo?'<div class="badge">-'+Math.round((1-p.price/p.old)*100)+'%</div>':''}${d<7?`<div class="soon">⏰ Expire dans ${d} j</div>`:''}<img src="${p.image}" alt="${esc(p.name)}"></div>
+    <div class="body"><div class="name">${esc(p.name)}</div><div class="stock">Stock : ${p.stock}</div>
+    <div class="prices"><span class="price">${money(p.price)}</span>${promo?`<span class="old">${money(p.old)}</span>`:""}</div>
+    <div class="controls"><button onclick="changeQty(${p.id},-1)">−</button><div class="qty">${qty}</div><button onclick="changeQty(${p.id},1)">+</button></div>
+    ${qty?`<div class="lineTotal">Total : <b>${money(qty*p.price)}</b></div>`:""}
+    </div></article>`
+ }).join("");
+}
+function esc(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function changeQty(id,delta){const p=products.find(x=>x.id===id);let q=(cart[id]||0)+delta;q=Math.max(0,Math.min(p.stock,q));if(q)cart[id]=q;else delete cart[id];save();render()}
+document.getElementById("search").addEventListener("input",render);
+function openCheckout(){
+ const items=Object.entries(cart).map(([id,q])=>({p:products.find(x=>x.id==id),q})).filter(x=>x.p);
+ if(!items.length){toast("Votre panier est vide.");return}
+ let warning="";
+ items.forEach(x=>{if(!x.p || x.p.stock<x.q || daysTo(x.p.expiry)<0){delete cart[x.p.id];warning="Certains produits ne sont plus disponibles et ont été retirés du panier."}})
+ if(warning){save();render();toast(warning);return}
+ document.getElementById("checkoutNotice").innerHTML="";
+ document.getElementById("summary").innerHTML=summaryHtml(items);
+ document.getElementById("cName").value=customer.name||"";
+ document.getElementById("cPhone").value=customer.phone||"";
+ document.getElementById("cAddress").value=customer.address||"";
+ document.getElementById("checkoutModal").classList.add("open");
+}
+function summaryHtml(items){let total=items.reduce((s,x)=>s+x.q*x.p.price,0);return items.map(x=>`<div class="sumrow"><span>${esc(x.p.name)} × ${x.q}</span><b>${money(x.q*x.p.price)}</b></div>`).join("")+`<div class="sumrow total"><span>Total</span><b>${money(total)}</b></div>`}
+function closeModal(id){document.getElementById(id).classList.remove("open")}
+function confirmOrder(){
+ const items=Object.entries(cart).map(([id,q])=>({p:products.find(x=>x.id==id),q})).filter(x=>x.p);
+ const invalid=items.filter(x=>x.p.stock<x.q || daysTo(x.p.expiry)<0);
+ if(invalid.length){invalid.forEach(x=>delete cart[x.p.id]);save();render();document.getElementById("checkoutNotice").innerHTML='<div class="notice">⚠ Un produit n’est plus disponible. Le panier a été mis à jour. Vérifiez le récapitulatif.</div>';document.getElementById("summary").innerHTML=summaryHtml(items.filter(x=>x.p.stock>=x.q));return}
+ const name=document.getElementById("cName").value.trim(),phone=document.getElementById("cPhone").value.trim(),address=document.getElementById("cAddress").value.trim();
+ if(!name||!phone||!address){toast("Veuillez remplir votre nom, téléphone et adresse.");return}
+ customer={name,phone,address};localStorage.setItem("emarket_customer",JSON.stringify(customer));
+ const total=items.reduce((s,x)=>s+x.q*x.p.price,0);
+ items.forEach(x=>x.p.stock-=x.q);
+ const order={id:"EM-"+Date.now().toString().slice(-7),date:new Date().toLocaleString("fr-FR"),customer:{...customer},items:items.map(x=>({id:x.p.id,name:x.p.name,qty:x.q,unit:x.p.price})),total,payment:document.querySelector('input[name="pay"]:checked').value,receive:document.querySelector('input[name="receive"]:checked').value,status:"En attente"};
+ orders.unshift(order);cart={};save();render();closeModal("checkoutModal");toast("Commande "+order.id+" confirmée 🎉");}
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3000)}
+function openAdmin(){document.getElementById("customerView").style.display="none";document.getElementById("adminView").style.display="block";window.scrollTo(0,0)}
+function closeAdmin(){document.getElementById("adminView").style.display="none";document.getElementById("customerView").style.display="block";render()}
+function loginAdmin(){
+ if(document.getElementById("loginUser").value==="admin"&&document.getElementById("loginPass").value==="emarket2026"){document.getElementById("loginBox").style.display="none";document.getElementById("adminPanel").style.display="block";renderAdmin()}else toast("Identifiant ou mot de passe incorrect.")
+}
+function renderAdmin(){
+ const exp=activeProducts().filter(p=>daysTo(p.expiry)<7).length, out=products.filter(p=>p.stock<=0).length, revenue=orders.reduce((s,o)=>s+o.total,0);
+ document.getElementById("stats").innerHTML=[["Produits",products.length],["Commandes",orders.length],["Rupture",out],["Bientôt périmés",exp],["Chiffre d'affaires",money(revenue)]].map(x=>`<div class="stat"><small>${x[0]}</small><strong>${x[1]}</strong></div>`).join("");
+ document.getElementById("productTable").innerHTML=products.map(p=>`<tr><td>${esc(p.name)}</td><td>${money(p.price)}</td><td>${p.stock}</td><td>${p.expiry}</td><td>${p.old&&p.old>p.price?"Oui":"Non"}</td><td><button class="mini" onclick="editProduct(${p.id})">Modifier</button> <button class="mini danger" onclick="deleteProduct(${p.id})">Supprimer</button></td></tr>`).join("");
+ document.getElementById("orderTable").innerHTML=orders.map(o=>`<tr><td>${esc(o.customer.name)}<br><small>${esc(o.customer.phone)}</small></td><td>${money(o.total)}</td><td>${o.payment}</td><td>${o.receive}</td><td><select onchange="setStatus('${o.id}',this.value)">${["En attente","En préparation","Livrée"].map(s=>`<option ${o.status===s?"selected":""}>${s}</option>`).join("")}</select></td></tr>`).join("")||'<tr><td colspan="5">Aucune commande.</td></tr>';
+}
+function adminTab(tab,btn){document.querySelectorAll(".tabs button").forEach(x=>x.classList.remove("active"));btn.classList.add("active");document.getElementById("productsTab").style.display=tab==="products"?"block":"none";document.getElementById("ordersTab").style.display=tab==="orders"?"block":"none"}
+function newProduct(){document.getElementById("productModalTitle").textContent="Ajouter un produit";["pId","pName","pPrice","pStock","pOld","pExpiry","pImage"].forEach(x=>document.getElementById(x).value="");document.getElementById("pImageFile").value="";document.getElementById("pImagePreview").style.display="none";document.getElementById("productModal").classList.add("open")}
+function editProduct(id){const p=products.find(x=>x.id===id);document.getElementById("productModalTitle").textContent="Modifier le produit";document.getElementById("pId").value=p.id;document.getElementById("pName").value=p.name;document.getElementById("pPrice").value=p.price;document.getElementById("pStock").value=p.stock;document.getElementById("pOld").value=p.old||"";document.getElementById("pExpiry").value=p.expiry;document.getElementById("pImage").value=p.image;document.getElementById("pImageFile").value="";const preview=document.getElementById("pImagePreview");preview.src=p.image;preview.style.display="block";document.getElementById("productModal").classList.add("open")}
+document.getElementById("pImageFile").addEventListener("change", function(){
+ const file=this.files && this.files[0];
+ if(!file)return;
+ if(!file.type.startsWith("image/")){toast("Veuillez choisir une image.");this.value="";return}
+ const reader=new FileReader();
+ reader.onload=e=>{
+   document.getElementById("pImage").value=e.target.result;
+   const preview=document.getElementById("pImagePreview");
+   preview.src=e.target.result;
+   preview.style.display="block";
+ };
+ reader.readAsDataURL(file);
+});
+
+function saveProduct(){
+ const id=document.getElementById("pId").value, obj={name:document.getElementById("pName").value.trim(),price:+document.getElementById("pPrice").value,stock:+document.getElementById("pStock").value,old:+document.getElementById("pOld").value||0,expiry:document.getElementById("pExpiry").value,image:document.getElementById("pImage").value.trim() || (id ? products.find(x=>x.id==id).image : svg("🛒","#edf0ff"))};
+ if(!obj.name||!obj.price||!obj.expiry){toast("Nom, prix et date sont obligatoires.");return}
+ if(id){Object.assign(products.find(x=>x.id==id),obj)}else{obj.id=Date.now();products.push(obj)}
+ save();closeModal("productModal");renderAdmin();render();toast("Produit enregistré.")
+}
+function deleteProduct(id){if(confirm("Supprimer ce produit ?")){products=products.filter(p=>p.id!==id);delete cart[id];save();renderAdmin();render();}}
+function setStatus(id,status){const o=orders.find(x=>x.id===id);if(o){o.status=status;save();renderAdmin();}}
+render();
+</script>
+</body>
+</html>
