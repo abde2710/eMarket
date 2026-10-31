@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#242958">
+<title>E-market — Madagascar</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="top">🛒 E-market — vos courses simplement, depuis votre téléphone</div>
+<header><div class="nav">
+  <div class="logo">e<span>Market</span><b>•</b></div>
+  <div class="search"><input id="search" type="search" placeholder="Rechercher un produit…" autocomplete="off" aria-label="Rechercher"></div>
+  <button class="btn ghost" id="accountBtn">Connexion</button>
+</div></header>
+<main>
+  <section class="hero"><div><h1>Bienvenue sur E-market 👋</h1><p>Choisissez vos quantités, commandez, puis échangez avec le vendeur dans votre ticket.</p></div><div class="tag">⚡ Catalogue en temps réel</div></section>
+  <div class="catalogHead"><h2>Nos produits</h2><small id="countLabel"></small></div>
+  <div class="grid" id="catalog" aria-live="polite"></div>
+</main>
+<div class="cartbar"><div><small id="cartCount">Panier vide</small><strong id="cartTotal"></strong></div><button class="btn" id="checkoutBtn">🛍 Commander</button></div>
+<footer>E-market · Supermarché en ligne · Paiement à la livraison</footer>
+
+<dialog id="authDlg"><div class="sheet"><button class="close" data-close aria-label="Fermer">×</button><h2 id="authTitle">Connexion</h2><div id="authBody"></div></div></dialog>
+<dialog id="checkoutDlg"><div class="sheet"><button class="close" data-close aria-label="Fermer">×</button><h2>Votre commande</h2><div id="checkoutBody"></div></div></dialog>
+<dialog id="ordersDlg"><div class="sheet"><button class="close" data-close aria-label="Fermer">×</button><h2 id="ordersTitle">Mes commandes</h2><div id="ordersBody"></div></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+<script src="/js/common.js"></script>
+<script src="/js/shop.js"></script>
+</body>
+</html>
